@@ -22,6 +22,7 @@ export default defineConfig({
 
     nav: [
       { text: '文档', link: '/getting-started' },
+      { text: '模型库', link: '/model-library' },
       { text: 'API', link: '/api-guide' },
       { text: 'GitHub', link: 'https://github.com/xuanwu-ai/xuanwu' }
     ],
@@ -40,6 +41,7 @@ export default defineConfig({
           { text: 'CLI 命令参考', link: '/cli-reference' },
           { text: 'API 指南', link: '/api-guide' },
           { text: '模型管理', link: '/models' },
+          { text: '模型库', link: '/model-library' },
         ]
       },
       {

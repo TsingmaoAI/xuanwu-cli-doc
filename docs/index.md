@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 玄武
   text: 国产 AI 芯片推理框架
-  tagline: 高性能、兼容 OpenAI API，专为昇腾、摩尔线程等国产硬件优化
+  tagline: 高性能、兼容 OpenAI API，专为昇腾、沐曦等国产硬件优化
   actions:
     - theme: brand
       text: 快速开始
@@ -25,7 +25,7 @@ features:
     details: 多引擎架构自动选择最优后端，张量并行原生支持大模型多卡推理。
   - icon: 🛠️
     title: 国产原生
-    details: 深度适配昇腾、摩尔线程等国产 GPU，提供最佳性能与稳定性。
+    details: 深度适配昇腾、沐曦等国产 GPU，提供最佳性能与稳定性。
 ---
 
 <style>

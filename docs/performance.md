@@ -23,7 +23,7 @@
 # 昇腾
 npu-smi info
 
-# 摩尔线程
+# 沐曦
 musa-smi
 ```
 

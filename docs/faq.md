@@ -107,7 +107,7 @@ xw ps
 
 **排查步骤：**
 
-1. 确认驱动正常：`npu-smi info` (昇腾) 或 `musa-smi` (摩尔线程)
+1. 确认驱动正常：`npu-smi info` (昇腾) 或 `musa-smi` (沐曦)
 2. 检查 GPU 是否被其他进程占用
 
 ---
