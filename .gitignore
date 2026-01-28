@@ -1,0 +1,10 @@
+node_modules
+docs/.vitepress/cache
+docs/.vitepress/dist
+.DS_Store
+*.log
+
+# 私密文件 - 不上传
+CHAT-HISTORY.md
+private*.md
+*.private.md
