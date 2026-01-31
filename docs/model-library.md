@@ -16,11 +16,26 @@
   padding: 18px 20px;
   background: var(--vp-c-bg);
   transition: all 0.2s ease;
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .model-card:hover {
   border-color: var(--vp-c-brand-1);
   box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+}
+
+a.model-card,
+a.model-card:hover,
+a.model-card:focus,
+a.model-card:active,
+a.model-card:visited {
+  text-decoration: none !important;
+}
+
+a.model-card * {
+  text-decoration: none !important;
 }
 
 .model-header {
@@ -37,28 +52,10 @@
   margin: 0;
 }
 
-.model-name a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.model-name a:hover {
-  color: var(--vp-c-brand-1);
-}
-
 .model-org {
   font-size: 12px;
   color: var(--vp-c-text-3);
   margin-top: 4px;
-}
-
-.model-org a {
-  color: var(--vp-c-text-3);
-  text-decoration: none;
-}
-
-.model-org a:hover {
-  color: var(--vp-c-brand-1);
 }
 
 .model-badge {
@@ -137,28 +134,8 @@
 .model-desc {
   font-size: 13px;
   color: var(--vp-c-text-2);
-  margin: 10px 0;
+  margin: 10px 0 0 0;
   line-height: 1.6;
-}
-
-.model-download {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.model-download a {
-  font-size: 12px;
-  color: var(--vp-c-brand-1);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-weight: 500;
-}
-
-.model-download a:hover {
-  text-decoration: underline;
 }
 
 .filter-bar {
@@ -190,7 +167,6 @@
   border-color: var(--vp-c-brand-1);
 }
 
-/* 暗色模式适配 */
 .dark .tag-engine {
   background: rgba(14, 165, 233, 0.15);
 }
@@ -209,124 +185,15 @@
 
 ---
 
-## DeepSeek 系列
-
-<div class="model-grid">
-
-<div class="model-card">
-  <div class="model-header">
-    <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.2">DeepSeek-V3.2</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/deepseek-ai">deepseek-ai</a> 开发</p>
-    </div>
-    <span class="model-badge badge-hot">HOT</span>
-  </div>
-  <div class="model-meta">
-    <span><span class="meta-label">参数：</span>685B MoE</span>
-    <span><span class="meta-label">大小：</span>~1.3TB</span>
-  </div>
-  <p class="model-desc">DeepSeek 最新旗舰模型，685B MoE 架构，性能对标 GPT-4o</p>
-  <div class="model-tags">
-    <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">FP8</span>
-    <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
-    <span class="tag tag-engine">MLGuider</span>
-    <span class="tag tag-engine">VLLM</span>
-  </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.2/files">ModelScope 下载 →</a>
-  </div>
-</div>
-
-<div class="model-card">
-  <div class="model-header">
-    <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.2-Exp">DeepSeek-V3.2-Exp</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/deepseek-ai">deepseek-ai</a> 开发</p>
-    </div>
-    <span class="model-badge badge-new">NEW</span>
-  </div>
-  <div class="model-meta">
-    <span><span class="meta-label">参数：</span>685B MoE</span>
-    <span><span class="meta-label">大小：</span>~1.3TB</span>
-  </div>
-  <p class="model-desc">V3.2 实验版本，包含最新优化，推理速度更快</p>
-  <div class="model-tags">
-    <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">FP8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
-    <span class="tag tag-engine">MLGuider</span>
-    <span class="tag tag-engine">VLLM</span>
-  </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.2-Exp/files">ModelScope 下载 →</a>
-  </div>
-</div>
-
-<div class="model-card">
-  <div class="model-header">
-    <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.1">DeepSeek-V3.1</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/deepseek-ai">deepseek-ai</a> 开发</p>
-    </div>
-  </div>
-  <div class="model-meta">
-    <span><span class="meta-label">参数：</span>671B MoE</span>
-    <span><span class="meta-label">大小：</span>~1.2TB</span>
-  </div>
-  <p class="model-desc">稳定版本，经过大规模生产验证</p>
-  <div class="model-tags">
-    <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
-    <span class="tag tag-engine">MLGuider</span>
-    <span class="tag tag-engine">VLLM</span>
-  </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-V3.1/files">ModelScope 下载 →</a>
-  </div>
-</div>
-
-<div class="model-card">
-  <div class="model-header">
-    <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-Distill-Qwen-32B">DeepSeek-Distill-Qwen-32B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/deepseek-ai">deepseek-ai</a> 开发</p>
-    </div>
-  </div>
-  <div class="model-meta">
-    <span><span class="meta-label">参数：</span>32B Dense</span>
-    <span><span class="meta-label">大小：</span>~64GB</span>
-  </div>
-  <p class="model-desc">基于 Qwen 架构的蒸馏模型，继承 DeepSeek 能力，推理更高效</p>
-  <div class="model-tags">
-    <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-quant">W4A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
-    <span class="tag tag-engine">MLGuider</span>
-    <span class="tag tag-engine">VLLM</span>
-  </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/deepseek-ai/DeepSeek-Distill-Qwen-32B/files">ModelScope 下载 →</a>
-  </div>
-</div>
-
-</div>
-
----
-
 ## Qwen 通义千问系列
 
 <div class="model-grid">
 
-<div class="model-card">
+<a href="/models/qwen3-235b/" class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-235B">Qwen3-235B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-235B</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-hot">HOT</span>
   </div>
@@ -334,101 +201,107 @@
     <span><span class="meta-label">参数：</span>235B MoE</span>
     <span><span class="meta-label">大小：</span>~470GB</span>
   </div>
-  <p class="model-desc">Qwen3 旗舰模型，235B MoE 架构，多语言能力出色</p>
   <div class="model-tags">
+    <span class="tag tag-quant">W4A8</span>
     <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">FP8</span>
-    <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-quant">INT8</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
-    <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-235B/files">ModelScope 下载 →</a>
-  </div>
-</div>
+  <p class="model-desc">Qwen3 旗舰模型，235B MoE 架构，22B 激活参数，多语言能力出色</p>
+</a>
 
-<div class="model-card">
+<a href="/models/qwen3-next-80b/" class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-next-80B">Qwen3-next-80B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-Next-80B</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-new">NEW</span>
   </div>
   <div class="model-meta">
-    <span><span class="meta-label">参数：</span>80B Dense</span>
+    <span><span class="meta-label">参数：</span>80B MoE</span>
     <span><span class="meta-label">大小：</span>~160GB</span>
   </div>
-  <p class="model-desc">下一代 Qwen 预览版，80B Dense 架构</p>
   <div class="model-tags">
+    <span class="tag tag-quant">W8A8</span>
     <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
-    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-next-80B/files">ModelScope 下载 →</a>
-  </div>
-</div>
+  <p class="model-desc">下一代 Qwen，Hybrid Transformer-Mamba 架构，3.9B 激活参数，百万上下文</p>
+</a>
 
-<div class="model-card">
+<a href="/models/qwen3-32b/" class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-32B">Qwen3-32B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-32B</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
   </div>
   <div class="model-meta">
     <span><span class="meta-label">参数：</span>32B Dense</span>
     <span><span class="meta-label">大小：</span>~64GB</span>
   </div>
-  <p class="model-desc">平衡性能与效率的主力模型，适合大多数场景</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-quant">W4A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-quant">INT4</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-32B/files">ModelScope 下载 →</a>
-  </div>
-</div>
+  <p class="model-desc">平衡性能与效率的主力模型，适合大多数场景</p>
+</a>
 
-<div class="model-card">
+<a href="/models/qwen3-30b/" class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen2.5-72B">Qwen2.5-72B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-30B</p>
+      <p class="model-org">Qwen (阿里云)</p>
+    </div>
+  </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>30B MoE</span>
+    <span><span class="meta-label">大小：</span>~60GB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">INT8</span>
+    <span class="tag tag-quant">INT4</span>
+    <span class="tag tag-default">MindIE</span>
+    <span class="tag tag-engine">VLLM</span>
+  </div>
+  <p class="model-desc">轻量 MoE 模型，30B 参数仅 3B 激活，高效推理</p>
+</a>
+
+<a href="/models/qwen2.5-72b/" class="model-card">
+  <div class="model-header">
+    <div>
+      <p class="model-name">Qwen2.5-72B</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
   </div>
   <div class="model-meta">
     <span><span class="meta-label">参数：</span>72B Dense</span>
     <span><span class="meta-label">大小：</span>~144GB</span>
   </div>
-  <p class="model-desc">Qwen2.5 旗舰 Dense 模型，长文本能力强</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
-    <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-quant">INT4</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen2.5-72B/files">ModelScope 下载 →</a>
-  </div>
-</div>
+  <p class="model-desc">Qwen2.5 旗舰 Dense 模型，长文本能力强，稳定可靠</p>
+</a>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/QwQ-32B">QwQ</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">QwQ</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-hot">HOT</span>
   </div>
@@ -436,43 +309,134 @@
     <span><span class="meta-label">参数：</span>32B Dense</span>
     <span><span class="meta-label">大小：</span>~64GB</span>
   </div>
-  <p class="model-desc">专注推理的思考模型，擅长数学和代码</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W4A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/QwQ-32B/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">专注推理的思考模型，擅长数学和代码</p>
 </div>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-Coder-32B">Qwen3-Coder</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-Coder</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
   </div>
   <div class="model-meta">
     <span><span class="meta-label">参数：</span>32B Dense</span>
     <span><span class="meta-label">大小：</span>~64GB</span>
   </div>
-  <p class="model-desc">代码专用模型，支持多种编程语言</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-Coder-32B/files">ModelScope 下载 →</a>
+  <p class="model-desc">代码专用模型，支持多种编程语言</p>
+</div>
+
+</div>
+
+---
+
+## DeepSeek 系列
+
+<div class="model-grid">
+
+<div class="model-card">
+  <div class="model-header">
+    <div>
+      <p class="model-name">DeepSeek-V3.2</p>
+      <p class="model-org">deepseek-ai</p>
+    </div>
+    <span class="model-badge badge-hot">HOT</span>
   </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>685B MoE</span>
+    <span><span class="meta-label">大小：</span>~1.3TB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">FP8</span>
+    <span class="tag tag-quant">W8A8</span>
+    <span class="tag tag-default">MindIE</span>
+    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-engine">VLLM</span>
+  </div>
+  <p class="model-desc">DeepSeek 最新旗舰模型，685B MoE 架构，性能对标 GPT-4o</p>
+</div>
+
+<div class="model-card">
+  <div class="model-header">
+    <div>
+      <p class="model-name">DeepSeek-V3.2-Exp</p>
+      <p class="model-org">deepseek-ai</p>
+    </div>
+    <span class="model-badge badge-new">NEW</span>
+  </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>685B MoE</span>
+    <span><span class="meta-label">大小：</span>~1.3TB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">FP8</span>
+    <span class="tag tag-default">MindIE</span>
+    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-engine">VLLM</span>
+  </div>
+  <p class="model-desc">V3.2 实验版本，包含最新优化，推理速度更快</p>
+</div>
+
+<div class="model-card">
+  <div class="model-header">
+    <div>
+      <p class="model-name">DeepSeek-V3.1</p>
+      <p class="model-org">deepseek-ai</p>
+    </div>
+  </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>671B MoE</span>
+    <span><span class="meta-label">大小：</span>~1.2TB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">INT8</span>
+    <span class="tag tag-quant">W8A8</span>
+    <span class="tag tag-default">MindIE</span>
+    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-engine">VLLM</span>
+  </div>
+  <p class="model-desc">稳定版本，经过大规模生产验证</p>
+</div>
+
+<div class="model-card">
+  <div class="model-header">
+    <div>
+      <p class="model-name">DeepSeek-Distill-Qwen-32B</p>
+      <p class="model-org">deepseek-ai</p>
+    </div>
+  </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>32B Dense</span>
+    <span><span class="meta-label">大小：</span>~64GB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">INT8</span>
+    <span class="tag tag-quant">W4A8</span>
+    <span class="tag tag-default">MindIE</span>
+    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-engine">VLLM</span>
+  </div>
+  <p class="model-desc">基于 Qwen 架构的蒸馏模型，继承 DeepSeek 能力，推理更高效</p>
 </div>
 
 </div>
@@ -486,8 +450,8 @@
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-VL-MoE">Qwen3-VL-MoE</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-VL-MoE</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-vl">VL</span>
   </div>
@@ -496,24 +460,21 @@
     <span><span class="meta-label">大小：</span>~144GB</span>
     <span><span class="meta-label">类型：</span>Vision</span>
   </div>
-  <p class="model-desc">视觉语言 MoE 模型，支持图像理解和 OCR</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-VL-MoE/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">视觉语言 MoE 模型，支持图像理解和 OCR</p>
 </div>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen3-VL-32B">Qwen3-VL-32B</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen3-VL-32B</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-vl">VL</span>
   </div>
@@ -522,25 +483,22 @@
     <span><span class="meta-label">大小：</span>~64GB</span>
     <span><span class="meta-label">类型：</span>Vision</span>
   </div>
-  <p class="model-desc">32B 视觉语言模型，平衡效果与效率</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen3-VL-32B/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">32B 视觉语言模型，平衡效果与效率</p>
 </div>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Qwen/Qwen2.5-VL-72B">Qwen2.5-VL</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Qwen">Qwen (阿里云)</a> 开发</p>
+      <p class="model-name">Qwen2.5-VL</p>
+      <p class="model-org">Qwen (阿里云)</p>
     </div>
     <span class="model-badge badge-vl">VL</span>
   </div>
@@ -549,17 +507,14 @@
     <span><span class="meta-label">大小：</span>~144GB</span>
     <span><span class="meta-label">类型：</span>Vision</span>
   </div>
-  <p class="model-desc">Qwen2.5 视觉语言模型，图像理解能力强</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Qwen/Qwen2.5-VL-72B/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">Qwen2.5 视觉语言模型，图像理解能力强</p>
 </div>
 
 </div>
@@ -573,8 +528,8 @@
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/ZhipuAI/GLM-4.5">GLM-4.5</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/ZhipuAI">智谱 AI (ZhipuAI)</a> 开发</p>
+      <p class="model-name">GLM-4.5</p>
+      <p class="model-org">智谱 AI (ZhipuAI)</p>
     </div>
     <span class="model-badge badge-new">NEW</span>
   </div>
@@ -582,43 +537,37 @@
     <span><span class="meta-label">参数：</span>32B Dense</span>
     <span><span class="meta-label">大小：</span>~64GB</span>
   </div>
-  <p class="model-desc">智谱最新一代基座模型，综合能力出色</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W8A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/ZhipuAI/GLM-4.5/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">智谱最新一代基座模型，综合能力出色</p>
 </div>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/ZhipuAI/GLM-4.7-Flash">GLM-4.7-Flash</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/ZhipuAI">智谱 AI (ZhipuAI)</a> 开发</p>
+      <p class="model-name">GLM-4.7-Flash</p>
+      <p class="model-org">智谱 AI (ZhipuAI)</p>
     </div>
   </div>
   <div class="model-meta">
     <span><span class="meta-label">参数：</span>9B Dense</span>
     <span><span class="meta-label">大小：</span>~18GB</span>
   </div>
-  <p class="model-desc">轻量快速版本，适合低延迟场景</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
     <span class="tag tag-quant">W4A8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/ZhipuAI/GLM-4.7-Flash/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">轻量快速版本，适合低延迟场景</p>
 </div>
 
 </div>
@@ -632,8 +581,8 @@
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Moonshot/Kimi-K2-0905">Kimi-K2-0905</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Moonshot">月之暗面 (Moonshot AI)</a> 开发</p>
+      <p class="model-name">Kimi-K2-0905</p>
+      <p class="model-org">月之暗面 (Moonshot AI)</p>
     </div>
     <span class="model-badge badge-hot">HOT</span>
   </div>
@@ -641,41 +590,35 @@
     <span><span class="meta-label">参数：</span>1T MoE</span>
     <span><span class="meta-label">大小：</span>~2TB</span>
   </div>
-  <p class="model-desc">Kimi 旗舰模型，万亿参数 MoE，长文本能力顶尖</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">FP8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Moonshot/Kimi-K2-0905/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">Kimi 旗舰模型，万亿参数 MoE，长文本能力顶尖</p>
 </div>
 
 <div class="model-card">
   <div class="model-header">
     <div>
-      <p class="model-name"><a href="https://modelscope.cn/models/Moonshot/Kimi-K2.5">Kimi-K2.5</a></p>
-      <p class="model-org">由 <a href="https://modelscope.cn/organization/Moonshot">月之暗面 (Moonshot AI)</a> 开发</p>
+      <p class="model-name">Kimi-K2.5</p>
+      <p class="model-org">月之暗面 (Moonshot AI)</p>
     </div>
   </div>
   <div class="model-meta">
     <span><span class="meta-label">参数：</span>MoE</span>
     <span><span class="meta-label">大小：</span>~1TB</span>
   </div>
-  <p class="model-desc">K2 系列优化版，推理效率提升</p>
   <div class="model-tags">
     <span class="tag tag-quant">BF16</span>
     <span class="tag tag-quant">INT8</span>
-    <span class="tag tag-default">MindIE (默认)</span>
+    <span class="tag tag-default">MindIE</span>
     <span class="tag tag-engine">MLGuider</span>
     <span class="tag tag-engine">VLLM</span>
   </div>
-  <div class="model-download">
-    <a href="https://modelscope.cn/models/Moonshot/Kimi-K2.5/files">ModelScope 下载 →</a>
-  </div>
+  <p class="model-desc">K2 系列优化版，推理效率提升</p>
 </div>
 
 </div>
@@ -688,9 +631,9 @@
 |------|------|----------|----------|
 | **BF16** | 高 | 100% | 最佳效果，显存充足时首选 |
 | **FP8** | 较高 | ~50% | 大模型推荐，精度损失小 |
-| **INT8** | 中 | ~50% | 通用量化，平衡效果和效率 |
+| **INT8 / I8** | 中 | ~50% | 通用量化，平衡效果和效率 |
 | **W8A8** | 中 | ~50% | 权重和激活都量化 |
-| **W4A8** | 较低 | ~25% | 极致压缩，适合资源受限场景 |
+| **INT4 / I4** | 较低 | ~25% | 极致压缩，适合资源受限场景 |
 
 ---
 
@@ -701,24 +644,4 @@
 | **MindIE** | 华为原生 | 默认引擎，昇腾硬件官方支持，稳定性最佳 |
 | **MLGuider** | 玄武自研 | 深度优化引擎，部分模型性能最优 |
 | **VLLM** | 开源社区 | 功能丰富，支持多种优化技术 |
-
----
-
-## 运行示例
-
-```bash
-# 运行 DeepSeek-V3.2
-xw run deepseek-ai/DeepSeek-V3.2
-
-# 运行 Qwen3-32B INT8 量化版
-xw run Qwen/Qwen3-32B:int8
-
-# 运行 Kimi-K2 指定多卡
-xw run Moonshot/Kimi-K2-0905 --device 0,1,2,3,4,5,6,7
-
-# 指定推理引擎
-xw run Qwen/Qwen3-32B --engine vllm
-
-# 查看模型详情
-xw show Qwen/Qwen3-32B
-```
+| **SGLang** | 开源社区 | 高性能推理引擎，支持结构化生成 |

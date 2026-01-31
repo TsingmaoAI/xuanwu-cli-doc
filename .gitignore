@@ -8,3 +8,4 @@ docs/.vitepress/dist
 CHAT-HISTORY.md
 private*.md
 *.private.md
+conversation-history.jsonl

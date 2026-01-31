@@ -5,6 +5,12 @@ export default defineConfig({
   description: "高性能国产 AI 芯片推理框架",
   lang: 'zh-CN',
 
+  vite: {
+    server: {
+      allowedHosts: ['mount-initially-element-strength.trycloudflare.com']
+    }
+  },
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
@@ -41,7 +47,22 @@ export default defineConfig({
           { text: 'CLI 命令参考', link: '/cli-reference' },
           { text: 'API 指南', link: '/api-guide' },
           { text: '模型管理', link: '/models' },
-          { text: '模型库', link: '/model-library' },
+        ]
+      },
+      {
+        text: '模型仓库',
+        link: '/model-library',
+        items: [
+          {
+            text: '内置模型',
+            items: [
+              { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
+              { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
+              { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
+              { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
+              { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
+            ]
+          },
         ]
       },
       {
