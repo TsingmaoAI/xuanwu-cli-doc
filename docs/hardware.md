@@ -4,12 +4,11 @@
 
 ## 支持的平台
 
-<!-- TODO:列出所有的小版本-->
 | 硬件平台 | 支持型号| 支持操作系统 | 驱动要求 | 状态 |
 |----------|----------|-------|----------|------|
-| **华为昇腾 Ascend** | `910B` | `OpenEuler`,`Ubuntu` | Ascend HDK > 25.0.0 | 支持 |
-| **华为昇腾 Ascend** | `310P` | `OpenEuler`,`Ubuntu` | Ascend HDK > 25.0.0 | 支持 |
-<!-- | **沐曦 MetaX** | `C550` | | 支持 | -->
+| **华为昇腾 Ascend** | `910B` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | 支持 |
+| **华为昇腾 Ascend** | `310P` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | 支持 |
+| **沐曦 MetaX** | `C550` | `Ubuntu` | MACA >= 3.2.1.10 | 支持 |
 
 ## 驱动安装与验证
 
@@ -31,14 +30,13 @@ mx-smi
 
 玄武CLI自动为模型和硬件组合选择最佳推理后端，以下是玄武CLI目前支持的推理引擎列表：
 
-<!-- TODO:列出所有的小版本-->
 | 引擎 | 支持硬件 | 说明 |
 |------|------|------|
 | **MindIE** | `Ascend 910B`<br> `Acend 310P` | 华为官方维护的高性能推理引擎 [更多介绍](https://www.hiascend.com/developer/software/mindie) |
 | **vLLM-Ascend** | `Ascend 910B`<br> `Ascend 310P` | 来自开源社区的优秀推理引擎，海外vLLM生态社区与华为社区共建 [更多介绍](https://docs.vllm.ai/projects/vllm-ascend-cn/zh-cn/latest/) |
-| **MLGuider Community** | `Ascend 310P` | 清昴智能自研引擎社区版 [更多介绍](https://www.tsingmao.com) |
-| **MLGuider Enterprise** | `custom` | 清昴智能自研引擎企业版（需获取单独授权），提供更多芯片、模型的支持与更广的性能支持，更多信息请咨询[清昴智能](mailto:mlguider@tsingmao.com) [更多介绍](https://www.tsingmao.com) |
-<!-- | **vLLM-MetaX** | `MetaX C500` | 来自开源社区的优秀推理引擎，海外vLLM生态社区与沐曦社区共建 [更多介绍](https://vllm-metax.readthedocs.io/en/latest/index.html) | -->
+| **vLLM-MetaX** | `MetaX C550` | 来自开源社区的优秀推理引擎，海外vLLM生态社区与沐曦社区共建 [更多介绍](https://vllm-metax.readthedocs.io/en/latest/index.html) |
+| **MLGuider Community** | `Ascend 310P` | 清昴智能自研引擎社区版 [更多介绍](www.tsingmao.com) |
+| **MLGuider Enterprise** | `custom` | 清昴智能自研引擎企业版（需获取单独授权），提供更多芯片、模型的支持与更广的性能支持，更多信息请咨询[清昴智能](mailto:mlguider@tsingmao.com) [更多介绍](www.tsingmao.com) |
 
 用户无需手动选择引擎，玄武CLI将自动处理引擎的选择。可通过 `xw ls` 或 `xw ps` 查看使用的引擎。
 
