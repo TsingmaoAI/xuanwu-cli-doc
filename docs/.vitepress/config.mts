@@ -30,7 +30,7 @@ export default defineConfig({
       { text: '文档', link: '/getting-started' },
       { text: '模型库', link: '/model-library' },
       { text: 'API', link: '/api-guide' },
-      { text: 'GitHub', link: 'https://github.com/xuanwu-ai/xuanwu' }
+      { text: 'GitHub', link: 'https://github.com/TsingmaoAI/xw-cli' }
     ],
 
     sidebar: [
@@ -49,29 +49,29 @@ export default defineConfig({
           { text: '模型管理', link: '/models' },
         ]
       },
-      {
-        text: '模型仓库',
-        link: '/model-library',
-        items: [
-          {
-            text: '内置模型',
-            items: [
-              { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
-              { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
-              { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
-              { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
-              { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
-            ]
-          },
-        ]
-      },
+      // {
+      //   text: '模型仓库',
+      //   link: '/model-library',
+      //   items: [
+      //     {
+      //       text: '内置模型',
+      //       items: [
+      //         { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
+      //         { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
+      //         { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
+      //         { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
+      //         { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
+      //       ]
+      //     },
+      //   ]
+      // },
       {
         text: '进阶',
         items: [
           { text: '架构设计', link: '/architecture' },
-          { text: '模型仓库', link: '/model-registry' },
+          // { text: '模型仓库', link: '/model-registry' },
           { text: '第三方工具集成', link: '/integrations' },
-          { text: '性能优化', link: '/performance' },
+          // { text: '性能优化', link: '/performance' },
         ]
       },
       {

@@ -1,6 +1,6 @@
 # 第三方工具集成
 
-任何支持配置 OpenAI API Base URL 的工具都可以与玄武集成。
+任何支持配置 OpenAI API Base URL 的工具都可以与玄武CLI集成。
 
 ## LangChain
 
@@ -70,4 +70,4 @@ API Key: not-needed (或任意值)
 Model: Qwen/Qwen3-8B (或其他本地模型)
 ```
 
-玄武完全兼容 OpenAI API 规范，无需额外适配。
+玄武CLI完全兼容 OpenAI API 规范，无需额外适配。
