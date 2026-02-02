@@ -217,36 +217,17 @@ onMounted(() => {
                     document.querySelector('[class*="Aside"]')
       
       if (!aside) {
-        console.log('[筛选] 未找到导航容器，尝试查找所有 aside')
-        // 尝试查找页面中所有的 aside
-        const allAsides = document.querySelectorAll('aside')
-        console.log('[筛选] 找到', allAsides.length, '个 aside 元素')
-        if (allAsides.length > 0) {
-          allAsides.forEach((a, i) => {
-            console.log(`[筛选] Aside ${i}:`, a.className, a.querySelectorAll('a').length, '个链接')
-          })
-        }
         setTimeout(() => updateOutline(filter), 300)
         return
       }
-      
-      console.log('[筛选] 找到导航容器:', aside.className)
       
       // 查找所有可能的导航项 - 使用更宽泛的选择器
       const allNavItems = aside.querySelectorAll('li, [class*="outline"], [class*="nav"], a[href*="#"]')
       
       if (allNavItems.length === 0) {
-        console.log('[筛选] 未找到导航项，尝试查找所有链接')
-        const allLinks = aside.querySelectorAll('a')
-        console.log('[筛选] 找到', allLinks.length, '个链接')
-        allLinks.forEach((link, i) => {
-          console.log(`[筛选] 链接 ${i}:`, link.textContent.trim(), link.getAttribute('href'))
-        })
         setTimeout(() => updateOutline(filter), 300)
         return
       }
-      
-      console.log(`[筛选] 找到 ${allNavItems.length} 个导航项，筛选条件: ${filter}`)
       
       // 遍历所有导航项
       allNavItems.forEach(navItem => {
@@ -307,13 +288,11 @@ onMounted(() => {
             navItem.style.visibility = 'visible'
             navItem.style.opacity = '1'
             navItem.classList.remove('filter-hidden')
-            console.log(`[筛选] 显示: ${matchedHeading}`)
           } else {
             navItem.style.display = 'none'
             navItem.style.visibility = 'hidden'
             navItem.style.opacity = '0'
             navItem.classList.add('filter-hidden')
-            console.log(`[筛选] 隐藏: ${matchedHeading}`)
           }
         }
       })

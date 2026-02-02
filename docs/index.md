@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: 玄武
+  name: 玄武CLI
   text: 国产 AI 芯片推理框架
   tagline: 高性能、兼容 OpenAI API，专为昇腾、沐曦等国产硬件优化
   actions:
