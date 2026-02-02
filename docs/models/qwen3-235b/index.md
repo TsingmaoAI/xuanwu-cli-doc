@@ -1,3 +1,12 @@
+---
+prev:
+  link: /model-library
+  text: 模型仓库
+next:
+  link: /models/qwen3-next-80b
+  text: Qwen3-Next-80B
+---
+
 <style>
 .model-hero {
   padding: 24px 0;

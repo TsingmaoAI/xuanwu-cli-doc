@@ -1,3 +1,12 @@
+---
+prev:
+  link: /models/qwen3-30b
+  text: Qwen3-30B
+next:
+  link: /architecture
+  text: 架构设计
+---
+
 <style>
 .model-hero {
   padding: 24px 0;

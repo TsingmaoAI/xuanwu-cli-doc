@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "玄武",
+  title: "玄武CLI",
   description: "高性能国产 AI 芯片推理框架",
   lang: 'zh-CN',
 
@@ -49,22 +49,22 @@ export default defineConfig({
           { text: '模型管理', link: '/models' },
         ]
       },
-      // {
-      //   text: '模型仓库',
-      //   link: '/model-library',
-      //   items: [
-      //     {
-      //       text: '内置模型',
-      //       items: [
-      //         { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
-      //         { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
-      //         { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
-      //         { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
-      //         { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
-      //       ]
-      //     },
-      //   ]
-      // },
+      {
+        text: '模型仓库',
+        link: '/model-library',
+        items: [
+          {
+            text: '内置模型',
+            items: [
+              { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
+              { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
+              { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
+              { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
+              { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
+            ]
+          },
+        ]
+      },
       {
         text: '进阶',
         items: [

@@ -1,3 +1,12 @@
+---
+prev:
+  link: /models/qwen3-235b
+  text: Qwen3-235B
+next:
+  link: /models/qwen3-32b
+  text: Qwen3-32B
+---
+
 <style>
 .model-hero {
   padding: 24px 0;
