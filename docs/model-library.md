@@ -170,24 +170,153 @@ a.model-card * {
 .dark .tag-engine {
   background: rgba(14, 165, 233, 0.15);
 }
+
+.model-grid[data-category] {
+  display: grid;
+}
+
+.model-grid.hidden {
+  display: none;
+}
+
+.model-section.hidden {
+  display: none;
+}
 </style>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  function initFilter() {
+    const filterButtons = document.querySelectorAll('.filter-btn')
+    const modelGrids = document.querySelectorAll('.model-grid[data-category]')
+    const modelSections = document.querySelectorAll('h2')
+
+    if (filterButtons.length === 0) return
+
+    filterButtons.forEach(btn => {
+      // Remove existing listeners by cloning
+      const newBtn = btn.cloneNode(true)
+      btn.parentNode.replaceChild(newBtn, btn)
+      
+      newBtn.addEventListener('click', () => {
+        const filter = newBtn.getAttribute('data-filter')
+        const wasActive = newBtn.classList.contains('active')
+        
+        // If clicking the active button (except "all"), toggle it off
+        if (wasActive && filter !== 'all') {
+          // Remove active from current button
+          newBtn.classList.remove('active')
+          
+          // Activate "all" button instead
+          const allButtons = document.querySelectorAll('.filter-btn')
+          allButtons.forEach(b => {
+            if (b.getAttribute('data-filter') === 'all') {
+              b.classList.add('active')
+            }
+          })
+          
+          // Show all content
+          modelGrids.forEach(grid => {
+            grid.classList.remove('hidden')
+            grid.style.display = ''
+          })
+          
+          modelSections.forEach(section => {
+            section.classList.remove('hidden')
+            section.style.display = ''
+            const hr = section.previousElementSibling
+            if (hr && hr.tagName === 'HR') {
+              hr.style.display = ''
+            }
+          })
+        } else {
+          // Normal filter behavior
+          const allButtons = document.querySelectorAll('.filter-btn')
+          allButtons.forEach(b => b.classList.remove('active'))
+          newBtn.classList.add('active')
+
+          // Filter model grids
+          modelGrids.forEach(grid => {
+            const categoryAttr = grid.getAttribute('data-category')
+            if (!categoryAttr) return
+            
+            const categories = categoryAttr.split(' ')
+            if (filter === 'all' || categories.includes(filter)) {
+              grid.classList.remove('hidden')
+              grid.style.display = ''
+            } else {
+              grid.classList.add('hidden')
+              grid.style.display = 'none'
+            }
+          })
+
+          // Filter sections (h2 headings and their hr separators)
+          modelSections.forEach(section => {
+            const nextElement = section.nextElementSibling
+            if (nextElement && nextElement.classList.contains('model-grid')) {
+              const categoryAttr = nextElement.getAttribute('data-category')
+              if (!categoryAttr) return
+              
+              const categories = categoryAttr.split(' ')
+              if (filter === 'all' || categories.includes(filter)) {
+                section.classList.remove('hidden')
+                section.style.display = ''
+                // Show hr separator if exists
+                const hr = section.previousElementSibling
+                if (hr && hr.tagName === 'HR') {
+                  hr.style.display = ''
+                }
+              } else {
+                section.classList.add('hidden')
+                section.style.display = 'none'
+                // Hide hr separator if exists
+                const hr = section.previousElementSibling
+                if (hr && hr.tagName === 'HR') {
+                  hr.style.display = 'none'
+                }
+              }
+            }
+          })
+        }
+      })
+    })
+  }
+
+  // Initialize when DOM is ready
+  function tryInit() {
+    if (document.querySelector('.filter-btn')) {
+      initFilter()
+    } else {
+      setTimeout(tryInit, 100)
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit)
+  } else {
+    tryInit()
+  }
+})
+</script>
 
 ## 快速筛选
 
 <div class="filter-bar">
-  <span class="filter-btn active">全部</span>
-  <span class="filter-btn">DeepSeek</span>
-  <span class="filter-btn">Qwen</span>
-  <span class="filter-btn">GLM</span>
-  <span class="filter-btn">Kimi</span>
-  <span class="filter-btn">多模态</span>
+  <span class="filter-btn active" data-filter="all">全部</span>
+  <span class="filter-btn" data-filter="qwen">Qwen</span>
+  <span class="filter-btn" data-filter="deepseek">DeepSeek</span>
+  <span class="filter-btn" data-filter="glm">GLM</span>
+  <span class="filter-btn" data-filter="kimi">Kimi</span>
+  <span class="filter-btn" data-filter="multimodal">多模态</span>
 </div>
 
 ---
 
 ## Qwen 通义千问系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="qwen">
 
 <a href="/models/qwen3-235b/" class="model-card">
   <div class="model-header">
@@ -348,7 +477,7 @@ a.model-card * {
 
 ## DeepSeek 系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="deepseek">
 
 <div class="model-card">
   <div class="model-header">
@@ -445,7 +574,7 @@ a.model-card * {
 
 ## Qwen 多模态系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="qwen multimodal">
 
 <div class="model-card">
   <div class="model-header">
@@ -523,7 +652,7 @@ a.model-card * {
 
 ## GLM 智谱系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="glm">
 
 <div class="model-card">
   <div class="model-header">
@@ -576,7 +705,7 @@ a.model-card * {
 
 ## Kimi 月之暗面系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="kimi">
 
 <div class="model-card">
   <div class="model-header">
