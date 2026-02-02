@@ -8,11 +8,11 @@ export default defineConfig({
   vite: {
     server: {
       allowedHosts: ['mount-initially-element-strength.trycloudflare.com']
-    }
+    },
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/ico.png' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
   ],
 
@@ -24,7 +24,10 @@ export default defineConfig({
   },
 
   themeConfig: {
-    logo: '/logo.svg',
+    logo: {
+      light: '/logo-light.png',
+      dark: '/logo-dark.png'
+    },
 
     nav: [
       { text: '文档', link: '/getting-started' },
@@ -83,7 +86,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/xuanwu-ai/xuanwu' }
+      { icon: 'github', link: 'https://github.com/TsingmaoAI/xw-cli' }
     ],
 
     footer: {

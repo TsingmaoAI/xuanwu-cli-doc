@@ -11,7 +11,7 @@ hero:
       link: /getting-started
     - theme: alt
       text: GitHub
-      link: https://github.com/xuanwu-ai/xuanwu
+      link: https://github.com/TsingmaoAI/xw-cli
 
 features:
   - icon: 🚀

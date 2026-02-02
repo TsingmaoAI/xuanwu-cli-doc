@@ -36,8 +36,8 @@ mx-smi
 |------|------|------|
 | **MindIE** | `Ascend 910B`<br> `Acend 310P` | 华为官方维护的高性能推理引擎 [更多介绍](https://www.hiascend.com/developer/software/mindie) |
 | **vLLM-Ascend** | `Ascend 910B`<br> `Ascend 310P` | 来自开源社区的优秀推理引擎，海外vLLM生态社区与华为社区共建 [更多介绍](https://docs.vllm.ai/projects/vllm-ascend-cn/zh-cn/latest/) |
-| **MLGuider Community** | `Ascend 310P` | 清昴智能自研引擎社区版 [更多介绍](www.tsingmao.com) |
-| **MLGuider Enterprise** | `custom` | 清昴智能自研引擎企业版（需获取单独授权），提供更多芯片、模型的支持与更广的性能支持，更多信息请咨询[清昴智能](mailto:mlguider@tsingmao.com) [更多介绍](www.tsingmao.com) |
+| **MLGuider Community** | `Ascend 310P` | 清昴智能自研引擎社区版 [更多介绍](https://www.tsingmao.com) |
+| **MLGuider Enterprise** | `custom` | 清昴智能自研引擎企业版（需获取单独授权），提供更多芯片、模型的支持与更广的性能支持，更多信息请咨询[清昴智能](mailto:mlguider@tsingmao.com) [更多介绍](https://www.tsingmao.com) |
 <!-- | **vLLM-MetaX** | `MetaX C500` | 来自开源社区的优秀推理引擎，海外vLLM生态社区与沐曦社区共建 [更多介绍](https://vllm-metax.readthedocs.io/en/latest/index.html) | -->
 
 用户无需手动选择引擎，玄武CLI将自动处理引擎的选择。可通过 `xw ls` 或 `xw ps` 查看使用的引擎。

@@ -105,6 +105,13 @@
   font-size: 18px;
 }
 
+/* Logo 尺寸调整 */
+.VPNavBarTitle .logo {
+  width: 40px !important;
+  height: 40px !important;
+  margin-right: 8px;
+}
+
 /* 侧边栏 */
 .VPSidebar {
   background: var(--vp-c-bg) !important;
