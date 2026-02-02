@@ -170,24 +170,309 @@ a.model-card * {
 .dark .tag-engine {
   background: rgba(14, 165, 233, 0.15);
 }
+
+.model-grid[data-category] {
+  display: grid;
+}
+
+.model-grid.hidden {
+  display: none;
+}
+
+.model-section.hidden {
+  display: none;
+}
+
+/* 右侧导航项隐藏 */
+.VPDocAside .outline-item.filter-hidden,
+.VPDocAside li.filter-hidden,
+.VPDocAside .outline-link.filter-hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
 </style>
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  // 标题和筛选的映射关系
+  const headingFilterMap = {
+    'Qwen 通义千问系列': ['qwen'],
+    'DeepSeek 系列': ['deepseek'],
+    'Qwen 多模态系列': ['qwen', 'multimodal'],
+    'GLM 智谱系列': ['glm'],
+    'Kimi 月之暗面系列': ['kimi'],
+    '量化格式说明': [], // 始终显示
+    '推理引擎说明': []  // 始终显示
+  }
+
+  // 更新右侧导航
+  function updateOutline(filter) {
+    // 等待一下确保 DOM 已更新
+    requestAnimationFrame(() => {
+      // 查找右侧导航 - 尝试多种选择器
+      const aside = document.querySelector('.VPDocAside') || 
+                    document.querySelector('aside') ||
+                    document.querySelector('[class*="Aside"]')
+      
+      if (!aside) {
+        console.log('[筛选] 未找到导航容器，尝试查找所有 aside')
+        // 尝试查找页面中所有的 aside
+        const allAsides = document.querySelectorAll('aside')
+        console.log('[筛选] 找到', allAsides.length, '个 aside 元素')
+        if (allAsides.length > 0) {
+          allAsides.forEach((a, i) => {
+            console.log(`[筛选] Aside ${i}:`, a.className, a.querySelectorAll('a').length, '个链接')
+          })
+        }
+        setTimeout(() => updateOutline(filter), 300)
+        return
+      }
+      
+      console.log('[筛选] 找到导航容器:', aside.className)
+      
+      // 查找所有可能的导航项 - 使用更宽泛的选择器
+      const allNavItems = aside.querySelectorAll('li, [class*="outline"], [class*="nav"], a[href*="#"]')
+      
+      if (allNavItems.length === 0) {
+        console.log('[筛选] 未找到导航项，尝试查找所有链接')
+        const allLinks = aside.querySelectorAll('a')
+        console.log('[筛选] 找到', allLinks.length, '个链接')
+        allLinks.forEach((link, i) => {
+          console.log(`[筛选] 链接 ${i}:`, link.textContent.trim(), link.getAttribute('href'))
+        })
+        setTimeout(() => updateOutline(filter), 300)
+        return
+      }
+      
+      console.log(`[筛选] 找到 ${allNavItems.length} 个导航项，筛选条件: ${filter}`)
+      
+      // 遍历所有导航项
+      allNavItems.forEach(navItem => {
+        // 查找导航项内的文本（可能是链接或直接文本）
+        const link = navItem.querySelector('a') || navItem
+        const linkText = (link.textContent || '').trim()
+        const href = link.getAttribute('href') || ''
+        
+        // 跳过空项
+        if (!linkText) return
+        
+        // 遍历标题映射，查找匹配项
+        let matchedHeading = null
+        let matchedCategories = []
+        
+        for (const [headingText, categories] of Object.entries(headingFilterMap)) {
+          // 跳过"快速筛选"
+          if (headingText === '快速筛选') continue
+          
+          // 精确匹配或包含匹配
+          if (linkText === headingText || 
+              linkText.includes(headingText) || 
+              headingText.includes(linkText)) {
+            matchedHeading = headingText
+            matchedCategories = categories
+            break
+          }
+          
+          // 通过 href 匹配（如果包含标题关键词）
+          if (href && (href.includes(headingText) || href.includes(encodeURIComponent(headingText)))) {
+            matchedHeading = headingText
+            matchedCategories = categories
+            break
+          }
+        }
+        
+        if (matchedHeading) {
+          // 判断是否应该显示
+          let shouldShow = false
+          
+          if (matchedCategories.length === 0) {
+            // 说明类标题始终显示
+            shouldShow = true
+          } else {
+            // 模型类标题根据筛选条件
+            if (filter === 'all') {
+              shouldShow = true
+            } else if (filter === 'qwen') {
+              shouldShow = matchedCategories.includes('qwen')
+            } else {
+              shouldShow = matchedCategories.includes(filter)
+            }
+          }
+          
+          // 应用显示/隐藏
+          if (shouldShow) {
+            navItem.style.display = ''
+            navItem.style.visibility = 'visible'
+            navItem.style.opacity = '1'
+            navItem.classList.remove('filter-hidden')
+            console.log(`[筛选] 显示: ${matchedHeading}`)
+          } else {
+            navItem.style.display = 'none'
+            navItem.style.visibility = 'hidden'
+            navItem.style.opacity = '0'
+            navItem.classList.add('filter-hidden')
+            console.log(`[筛选] 隐藏: ${matchedHeading}`)
+          }
+        }
+      })
+    })
+  }
+
+  function initFilter() {
+    const filterButtons = document.querySelectorAll('.filter-btn')
+    const modelGrids = document.querySelectorAll('.model-grid[data-category]')
+    const modelSections = document.querySelectorAll('h2')
+
+    if (filterButtons.length === 0) return
+
+    filterButtons.forEach(btn => {
+      // Remove existing listeners by cloning
+      const newBtn = btn.cloneNode(true)
+      btn.parentNode.replaceChild(newBtn, btn)
+      
+      newBtn.addEventListener('click', () => {
+        const filter = newBtn.getAttribute('data-filter')
+        const wasActive = newBtn.classList.contains('active')
+        
+        // If clicking the active button (except "all"), toggle it off
+        if (wasActive && filter !== 'all') {
+          // Remove active from current button
+          newBtn.classList.remove('active')
+          
+          // Activate "all" button instead
+          const allButtons = document.querySelectorAll('.filter-btn')
+          allButtons.forEach(b => {
+            if (b.getAttribute('data-filter') === 'all') {
+              b.classList.add('active')
+            }
+          })
+          
+          // Show all content
+          modelGrids.forEach(grid => {
+            grid.classList.remove('hidden')
+            grid.style.display = ''
+          })
+          
+          modelSections.forEach(section => {
+            section.classList.remove('hidden')
+            section.style.display = ''
+            const hr = section.previousElementSibling
+            if (hr && hr.tagName === 'HR') {
+              hr.style.display = ''
+            }
+          })
+          
+          // 更新右侧导航 - 显示全部（延迟执行确保 DOM 更新完成）
+          setTimeout(() => updateOutline('all'), 300)
+          // 再次尝试，确保导航已渲染
+          setTimeout(() => updateOutline('all'), 600)
+        } else {
+          // Normal filter behavior
+          const allButtons = document.querySelectorAll('.filter-btn')
+          allButtons.forEach(b => b.classList.remove('active'))
+          newBtn.classList.add('active')
+
+          // Filter model grids
+          modelGrids.forEach(grid => {
+            const categoryAttr = grid.getAttribute('data-category')
+            if (!categoryAttr) return
+            
+            const categories = categoryAttr.split(' ')
+            // Qwen 筛选需要特殊处理：显示 qwen 和 multimodal
+            if (filter === 'all' || categories.includes(filter) || (filter === 'qwen' && categories.includes('qwen'))) {
+              grid.classList.remove('hidden')
+              grid.style.display = ''
+            } else {
+              grid.classList.add('hidden')
+              grid.style.display = 'none'
+            }
+          })
+
+          // Filter sections (h2 headings and their hr separators)
+          modelSections.forEach(section => {
+            const nextElement = section.nextElementSibling
+            if (nextElement && nextElement.classList.contains('model-grid')) {
+              const categoryAttr = nextElement.getAttribute('data-category')
+              if (!categoryAttr) return
+              
+              const categories = categoryAttr.split(' ')
+              // Qwen 筛选需要特殊处理
+              if (filter === 'all' || categories.includes(filter) || (filter === 'qwen' && categories.includes('qwen'))) {
+                section.classList.remove('hidden')
+                section.style.display = ''
+                // Show hr separator if exists
+                const hr = section.previousElementSibling
+                if (hr && hr.tagName === 'HR') {
+                  hr.style.display = ''
+                }
+              } else {
+                section.classList.add('hidden')
+                section.style.display = 'none'
+                // Hide hr separator if exists
+                const hr = section.previousElementSibling
+                if (hr && hr.tagName === 'HR') {
+                  hr.style.display = 'none'
+                }
+              }
+            }
+          })
+          
+          // 更新右侧导航（延迟执行确保 DOM 更新完成）
+          setTimeout(() => updateOutline(filter), 300)
+          // 再次尝试，确保导航已渲染
+          setTimeout(() => updateOutline(filter), 600)
+        }
+      })
+    })
+  }
+
+  // Initialize when DOM is ready
+  function tryInit() {
+    if (document.querySelector('.filter-btn')) {
+      initFilter()
+      // 初始化时更新导航（显示全部）
+      updateOutline('all')
+    } else {
+      setTimeout(tryInit, 100)
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit)
+  } else {
+    tryInit()
+  }
+  
+  // 监听路由变化，重新更新导航
+  if (typeof window !== 'undefined') {
+    window.addEventListener('hashchange', () => {
+      setTimeout(() => {
+        const activeFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all'
+        updateOutline(activeFilter)
+      }, 200)
+    })
+  }
+})
+</script>
 
 ## 快速筛选
 
 <div class="filter-bar">
-  <span class="filter-btn active">全部</span>
-  <span class="filter-btn">DeepSeek</span>
-  <span class="filter-btn">Qwen</span>
-  <span class="filter-btn">GLM</span>
-  <span class="filter-btn">Kimi</span>
-  <span class="filter-btn">多模态</span>
+  <span class="filter-btn active" data-filter="all">全部</span>
+  <span class="filter-btn" data-filter="qwen">Qwen</span>
+  <span class="filter-btn" data-filter="deepseek">DeepSeek</span>
+  <span class="filter-btn" data-filter="glm">GLM</span>
+  <span class="filter-btn" data-filter="kimi">Kimi</span>
+  <span class="filter-btn" data-filter="multimodal">多模态</span>
 </div>
 
 ---
 
 ## Qwen 通义千问系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="qwen">
 
 <a href="/models/qwen3-235b/" class="model-card">
   <div class="model-header">
@@ -348,7 +633,7 @@ a.model-card * {
 
 ## DeepSeek 系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="deepseek">
 
 <div class="model-card">
   <div class="model-header">
@@ -445,7 +730,7 @@ a.model-card * {
 
 ## Qwen 多模态系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="qwen multimodal">
 
 <div class="model-card">
   <div class="model-header">
@@ -523,7 +808,7 @@ a.model-card * {
 
 ## GLM 智谱系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="glm">
 
 <div class="model-card">
   <div class="model-header">
@@ -576,7 +861,7 @@ a.model-card * {
 
 ## Kimi 月之暗面系列
 
-<div class="model-grid">
+<div class="model-grid" data-category="kimi">
 
 <div class="model-card">
   <div class="model-header">
