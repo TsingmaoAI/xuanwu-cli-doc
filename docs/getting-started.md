@@ -15,10 +15,10 @@
 运行一键安装脚本：
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://xw.tsingmao.com/install.sh)"
+curl -o- http://xw.tsingmao.com/install.sh | bash
 ```
 
-脚本会自动检测系统环境，下载并安装玄武CLI到 `~/.xw/bin/xw`。
+脚本会自动检测系统环境和机器架构并安装。
 
 验证安装：
 
@@ -41,7 +41,7 @@ xw serve
 使用 `xw run` 下载并运行模型：
 
 ```bash
-xw run qwen2.5-7b
+xw run qwen3-8b
 ```
 
 首次运行需要下载模型与推理引擎，完成后进入交互式对话：
@@ -69,7 +69,7 @@ http://localhost:11581/v1/chat/completions
 curl http://localhost:11581/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "qwen2.5-7b",
+    "model": "qwen3-8b",
     "messages": [{"role": "user", "content": "你好"}]
   }'
 ```

@@ -24,11 +24,13 @@
 ## 存储位置
 
 <!--确认模型存储具体位置以及HOME目录如何指定-->
-模型存储在 `~/.xw/data/models`，可通过环境变量修改：
+模型存储在 `~/.xw/data/models`，可在启动玄武CLI服务端时，通过添加启动修改：
 
 ```bash
-export XUANWU_HOME="/data/xuanwu"
+xw serve --data /path/to/new/data
 ```
+
+模型存储会在data文件夹下生成models文件夹并管理。
 
 ## 常用命令
 

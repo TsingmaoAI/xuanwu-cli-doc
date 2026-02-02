@@ -43,24 +43,21 @@
 
 **自动路由**
 
-玄武CLI团队已提前验证模型-芯片-引擎矩阵，并自动根据当前硬件和模型选择对应引擎。用户也可以通过`--engine` 指定引擎，或可以通过玄武CLI的config文件（默认在`~/.xw/`）来修改玄武CLI的默认行为。
+玄武CLI团队已提前验证模型-芯片-引擎矩阵，并自动根据当前硬件和模型选择对应引擎。用户也可以通过`--engine` 指定引擎，或可以通过玄武CLI的config文件（默认在`~/.xw`）来修改玄武CLI的默认行为。
 
 ## 存储结构
 
-<!-- TODO：需要更新 -->
 ```
-~/.xuanwu/
-├── models/
-│   ├── {namespace}/
-│   │   └── {model_name}/
-│   │       ├── config.json
-│   │       ├── model-*.safetensors
-│   │       └── tokenizer.json
-├── cache/
-│   └── downloads/
-└── logs/
-    ├── xuanwu.log
-    └── engines/
+~/.xw/
+├── data
+│   ├── models
+│   │   └── model-name
+│   │       └── tag
+│   │           └── modelfiles
+│   └── server.conf
+├── devices.yaml
+├── models.yaml
+└── runtime_params.yaml
 ```
 
 ## 设计特点
