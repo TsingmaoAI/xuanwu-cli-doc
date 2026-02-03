@@ -6,7 +6,7 @@
 
 玄武CLI采用分层模块化架构：
 
-![玄武CLI架构示意图](/public/architecture.jpeg)
+<ArchitectureDiagram />
 <!-- ```
 ┌──────────────────────────────────────┐
 │     用户界面层                        │

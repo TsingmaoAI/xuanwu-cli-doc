@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
+import ArchitectureDiagram from './components/ArchitectureDiagram.vue'//引入组件用于支持文档内部架构图展示
 import { onMounted } from 'vue'
 import { fixCopyButtonIcons } from './copy-button-fix.js'
 
@@ -14,6 +15,8 @@ export default {
   },
   // 导出路由工具函数，供文档页面使用
   enhanceApp({ app, router }) {
+    //注册架构图显示组件
+    app.component('ArchitectureDiagram', ArchitectureDiagram)
     // 路由工具已通过独立的 router.ts 文件导出
     // 文档页面可以通过 import { useRouter } from '../.vitepress/theme/router' 使用
     
