@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /getting-started
+      link: /doc
     - theme: alt
       text: GitHub
       link: https://github.com/TsingmaoAI/xw-cli

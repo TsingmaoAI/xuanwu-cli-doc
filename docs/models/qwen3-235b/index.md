@@ -1,6 +1,6 @@
 ---
 prev:
-  link: /model-library
+  link: /models
   text: 模型仓库
 next:
   link: /models/qwen3-next-80b

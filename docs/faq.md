@@ -45,7 +45,7 @@ xw list           # 本地模型
 xw show <model>   # 模型详情
 ```
 
-所有支持的模型可以看[模型仓库](/model-library.md)。
+所有支持的模型可以看[模型仓库](/models)。
 
 ## 多 GPU
 
@@ -111,7 +111,7 @@ xw logs <model>
 
 ### 支持量化模型吗？
 
-支持 FP16/BF16/INT8/W8A8/W4A8 量化格式。各模型支持的量化种类不一样，详见[模型列表](/model-library.md)。
+支持 FP16/BF16/INT8/W8A8/W4A8 量化格式。各模型支持的量化种类不一样，详见[模型列表](/models)。
 
 ### 支持多模态吗？
 

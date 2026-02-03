@@ -1,19 +1,80 @@
 import { defineConfig } from 'vitepress'
+import { readFileSync } from 'fs'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default defineConfig({
   title: "玄武CLI",
   description: "高性能国产 AI 芯片推理框架",
   lang: 'zh-CN',
+  
+  // 确保 base 路径正确
+  base: '/',
+
+  // 启用 cleanUrls 去掉 .html 后缀
+  cleanUrls: true,
+
+  // 路由说明：
+  // - 根路径 / 已释放，供静态 HTML 文件使用
+  // - /home 访问原首页（home.md）
+  // - /doc 访问快速开始文档（doc.md）
+  // - /models 访问模型库（models.md）
+  // - /model-management 访问模型管理（model-management.md）
 
   vite: {
     server: {
       allowedHosts: ['mount-initially-element-strength.trycloudflare.com']
     },
+    // 配置开发服务器，确保 public/index.html 优先
+    plugins: [
+      {
+        name: 'serve-public-index',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // 如果是根路径请求，优先返回 public/index.html
+            if (req.url === '/' || req.url === '/index.html') {
+              const indexPath = resolve(__dirname, '../public/index.html')
+              try {
+                const content = readFileSync(indexPath, 'utf-8')
+                res.setHeader('Content-Type', 'text/html')
+                res.end(content)
+                return
+              } catch (e) {
+                // 如果文件不存在，继续正常流程
+                next()
+              }
+            } else {
+              next()
+            }
+          })
+        }
+      }
+    ]
   },
 
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: '/ico.png' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
+    // 在页面加载的最早阶段立即修复 URL，防止 VitePress 路由生成 .html URL
+    // 这个脚本必须在 VitePress 路由初始化之前执行
+    ['script', {}, `
+      (function() {
+        'use strict';
+        
+        // 只在确实需要时才修复 URL（带 .html 的 URL），避免干扰 VitePress 的正常加载
+        // 这个脚本只做一件事：如果 URL 带 .html 后缀，重定向到 clean URL
+        // 不拦截任何 history API，让 VitePress 完全控制路由
+        var path = window.location.pathname;
+        if (path && path.endsWith('.html') && path !== '/index.html') {
+          var cleanPath = path.replace(/\\.html$/, '');
+          // 立即使用 replace 重定向，不留下历史记录
+          window.location.replace(cleanPath + window.location.search + window.location.hash);
+        }
+      })();
+    `],
   ],
 
   markdown: {
@@ -25,13 +86,18 @@ export default defineConfig({
 
   themeConfig: {
     logo: {
+      // 开发模式下，public 目录的文件直接映射到根路径
+      // 构建后，构建脚本会将文件移动到 assets 目录
+      // 使用 /logo-light.png 在开发和生产环境都能工作
       light: '/logo-light.png',
       dark: '/logo-dark.png'
+      // 注意：VitePress 的 logo 配置不支持 link 属性
+      // 通过自定义组件 VPNavBarTitle.vue 实现点击跳转到 /home
     },
 
     nav: [
-      { text: '文档', link: '/getting-started' },
-      { text: '模型库', link: '/model-library' },
+      { text: '文档', link: '/doc' },
+      { text: '模型库', link: '/models' },
       { text: 'API', link: '/api-guide' },
       { text: 'GitHub', link: 'https://github.com/TsingmaoAI/xw-cli' }
     ],
@@ -40,7 +106,7 @@ export default defineConfig({
       {
         text: '入门',
         items: [
-          { text: '快速开始', link: '/getting-started' },
+          { text: '快速开始', link: '/doc' },
           { text: '硬件支持', link: '/hardware' },
         ]
       },
@@ -49,23 +115,13 @@ export default defineConfig({
         items: [
           { text: 'CLI 命令参考', link: '/cli-reference' },
           { text: 'API 指南', link: '/api-guide' },
-          { text: '模型管理', link: '/models' },
         ]
       },
       {
-        text: '模型仓库',
-        link: '/model-library',
+        text: '模型',
         items: [
-          {
-            text: '内置模型',
-            items: [
-              { text: 'Qwen3-235B', link: '/models/qwen3-235b' },
-              { text: 'Qwen3-Next-80B', link: '/models/qwen3-next-80b' },
-              { text: 'Qwen3-32B', link: '/models/qwen3-32b' },
-              { text: 'Qwen3-30B', link: '/models/qwen3-30b' },
-              { text: 'Qwen2.5-72B', link: '/models/qwen2.5-72b' },
-            ]
-          },
+          { text: '模型库', link: '/models' },
+          { text: '模型管理', link: '/model-management' },
         ]
       },
       {

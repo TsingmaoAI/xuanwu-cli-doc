@@ -9,3 +9,7 @@ CHAT-HISTORY.md
 private*.md
 *.private.md
 conversation-history.jsonl
+index.html
+xw/
+
+dist/
