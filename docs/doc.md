@@ -23,7 +23,7 @@ curl -o- http://xw.tsingmao.com/install.sh | bash
 验证安装：
 
 ```bash
-xw --version
+xw version
 ```
 
 ## 启动玄武CLI服务端

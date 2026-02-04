@@ -249,7 +249,6 @@ const routes = [
   'architecture',     // 架构设计
   'integrations',     // 第三方工具集成
   'faq',              // FAQ
-  'getting-started',  // 可能的路由
   'model-library',    // 可能的路由
   'model-registry',   // 可能的路由
   'performance'       // 可能的路由
