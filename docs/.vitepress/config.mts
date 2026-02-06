@@ -128,6 +128,7 @@ export default defineConfig({
         text: '进阶',
         items: [
           { text: '架构设计', link: '/architecture' },
+          { text: '离线安装与部署', link: '/offline-deployment' },
           // { text: '模型仓库', link: '/model-registry' },
           { text: '第三方工具集成', link: '/integrations' },
           // { text: '性能优化', link: '/performance' },
