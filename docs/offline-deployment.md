@@ -1,7 +1,10 @@
 # 离线安装部署文档
 
+# xw-cli 离线安装与部署
+
 本文档说明 xw-cli在离线或无外网环境下的安装与部署流程，便于复现与排查。
 
+---
 
 ## 一、概述
 
@@ -23,31 +26,61 @@
 
 | 变量 | 说明 |
 | --- | --- |
-| `VERSION` | 版本号，以官方发布为准（例如 `1.0.0`） |
+| `VERSION` | 版本号，以官方发布为准  |
 | `BASE_URL` | `https://xw.tsingmao.com` |
 | `arch` | 目标 CPU 架构：`amd64`（x86_64）或 `arm64`（aarch64） |
 
-**版本号从哪里读**：
+**下载命令示例**
 
-- **已下载的发行包**：解压后目录内有一份 `VERSION` 文件（由打包脚本生成），内容含 `VERSION=...`、`ARCH=...` 等，可直接查看：`cat VERSION` 或 `source VERSION` 后使用 `$VERSION`。下载 URL 中的文件名也包含版本号，如 `xw-1.0.0-amd64.tar.gz`。
-- **本仓库自行打包时**：版本号来自环境变量 `VERSION`（如 `VERSION=1.0.0 make package`）；未设置时在 `scripts/package.sh` 中默认为 `1.0.0`，在 `Makefile` 中默认为 `0.0.1`（`make package` 会传入 `VERSION` 给 package.sh）。
-- **已安装的二进制**：运行 `xw version --client` 可查看当前安装的 CLI 版本（编译时通过 ldflags 注入）。
-
-**下载命令示例**（按实际架构二选一）：
+1. **确定目标机器架构**（在目标机或同架构机上执行）：
 
 ```bash
-# 确定架构（在目标机或同架构机上执行）
-arch=$(uname -m)
-case "$arch" in
-  x86_64|amd64) arch=amd64 ;;
-  aarch64|arm64) arch=arm64 ;;
-  *) echo "Unsupported:$arch"; exit 1 ;;
-esac
-
-VERSION="1.0.0"
-BASE_URL="https://xw.tsingmao.com"
-curl -fSL "${BASE_URL}/xw-${VERSION}-${arch}.tar.gz" -o "xw-${VERSION}-${arch}.tar.gz"
+uname -m
 ```
+
+xw 支持的架构与安装包对应关系：
+
+| `uname -m` 输出 | 使用安装包 |
+| --- | --- |
+| x86_64 / amd64 | amd64 包 |
+| aarch64 / arm64 | arm64 包 |
+1. **确认安装包版本号**（与官方 install.sh 一致）：
+
+```bash
+curl -sL https://xw.tsingmao.com/install.sh | sed -n 's/^VERSION="\(.*\)"/\1/p'
+```
+
+输出即为当前发布的版本号（如 `0.0.1`），记为 `VERSION`，用于下面下载与离线步骤中的 `xw-${VERSION}-${arch}.tar.gz`。
+
+1. **按架构选择并执行下载命令**（将上一步得到的版本号代入，二选一）：
+
+```bash
+# arm64 包
+curl -fSL https://xw.tsingmao.com/xw-0.0.1-arm64.tar.gz -o xw-0.0.1-arm64.tar.gz
+
+# amd64 包
+curl -fSL https://xw.tsingmao.com/xw-0.0.1-amd64.tar.gz -o xw-0.0.1-amd64.tar.gz
+```
+
+若版本号非 `0.0.1`，将上述命令中的版本号替换为第 2 步得到的 `VERSION`。
+
+**离线环境安装步骤**
+
+1. 将下载得到的 `xw-${VERSION}-${arch}.tar.gz` 拷贝到离线机器（`VERSION`、`arch` 与上面一致）。
+2. 解压并进入目录，执行本地安装脚本（系统安装或用户安装二选一）：
+
+```bash
+tar -xzf xw-${VERSION}-${arch}.tar.gz
+cd xw-${VERSION}-${arch}
+
+# 系统安装（需 root）
+sudo bash scripts/install.sh
+
+# 或用户安装（无需 root）
+bash scripts/install.sh --user
+```
+
+后续步骤与本文档「四、本地安装脚本（install.sh）」一致。
 
 **离线环境安装步骤**：
 
@@ -133,8 +166,9 @@ docker load -i mindie-arm64.tar
 # 创建父目录（避免目标路径不存在）
 mkdir -p /home/离线机器username/.xw/data/models/qwen2-7b
 
-# 将完整模型目录拷贝为 latest
-cp -r /mnt/offlinetest/latest /home/离线机器username/.xw/data/models/qwen2-7b/latest
+# 例如，模型权重文件离线下载的位置在mnt/qwen2-7b
+# 将完整模型目录拷贝为 latest 
+cp -r /mnt/qwen2-7b /home/离线机器username/.xw/data/models/qwen2-7b/latest
 ```
 
 1. 启动服务与运行模型（与数据目录一致）：
@@ -142,37 +176,68 @@ cp -r /mnt/offlinetest/latest /home/离线机器username/.xw/data/models/qwen2-7
 
 **小结**：只要源目录是完整模型、且拷贝到上述 `{数据目录}/models/qwen2-7b/latest`，即可在离线环境用 xw 直接运行该模型，无需在线拉取。
 
-### 2.3 离线安装流程小结与执行步骤
+### 2.3 安装后检查与文件位置核对
 
-**阶段与有网/离线分工**：
+安装完成后，可按下列项核对是否就绪；完整路径说明见本文档三、安装涉及的文件与目录汇总。
 
-| 阶段 | 有网环境 | 离线环境 |
-| --- | --- | --- |
-| 安装包 | 下载 `xw-${VERSION}-${arch}.tar.gz` | 解压后执行 `scripts/install.sh` 或 `scripts/install.sh --user` |
-| 运行时镜像 | 从 `devices.yaml` 读取镜像列表，`docker pull` 后 `docker save` 为 tar | 将 tar 拷贝到离线机后 `docker load` |
-| 模型权重（可选） | 在有模型的环境准备好完整模型目录，或从模型介质拷贝 | 将完整模型目录拷贝到 `{数据目录}/models/{模型ID}/latest`（如 `~/.xw/data/models/qwen2-7b/latest`），再 `xw serve` 与 `xw run` |
+**1. CLI 与配置（安装包阶段）**
 
-**安装包阶段执行步骤**（快速安装与离线安装共用同一套动作，仅“有网/离线”执行的步骤范围不同）：
+| 安装方式 | 建议核对项 |
+| --- | --- |
+| 用户安装 | 执行 `xw version --client` 能输出版本；二进制在 `~/.local/bin/xw`；配置在 `~/.xw/`（`devices.yaml`、`models.yaml` 等）；数据目录为 `~/.xw/data`，模型目录为 `~/.xw/data/models`。若提示找不到 `xw`，执行 `source ~/.bashrc` 或 `source ~/.zshrc` 后重试。 |
+| 系统安装 | 执行 `xw version --client` 能输出版本；二进制在 `/usr/local/bin/xw`；配置在 `/etc/xw/`；数据目录为 `/var/lib/xw`，模型目录为 `/var/lib/xw/models`。服务：`systemctl status xw-server`。 |
 
-| 步骤 | 动作 | 有网（快速安装） | 离线 |
-| --- | --- | --- | --- |
-| 1 | 检测架构：`uname -m` → amd64 / arm64（仅支持 x86_64、aarch64） | ✓ | 已按目标机架构准备包，可跳过 |
-| 3 | 检查依赖：必须存在 `curl`、`tar` | ✓ | 仅需 `tar`（解压与执行脚本） |
-| 4 | 创建/进入目录：有网为临时目录，离线为已拷贝的发行包目录 | ✓ 临时目录 | ✓ 解压所在目录 |
-| 5 | 下载：`BASE_URL/xw-${VERSION}-${arch}.tar.gz` | ✓ | 跳过（使用已拷贝的 tar） |
-| 6 | 解压：`tar -xzf`，进入 `xw-${VERSION}-${arch}` 目录 | ✓ | ✓ |
-| 7 | 执行安装脚本：`chmod +x scripts/install.sh`，然后 `./scripts/install.sh` 或 `./scripts/install.sh --user` | ✓ 固定 `--user` | ✓ 二选一 |
-| 8 | 提示 PATH：若 `xw` 不在 PATH，提示 source ~/.bashrc / ~/.zshrc 或把 `~/.local/bin` 加入 PATH | ✓ | ✓（用户安装时） |
+**2. 运行时镜像（Docker）**
 
-有网环境下**快速安装**即执行步骤 1～8（含下载）；**离线安装**安装包阶段仅需在已有 tar 上执行步骤 6～7（解压、执行 install.sh），其余步骤按需（如检查依赖、提示 PATH）。
+若已按 2.2.1 在离线机执行过 `docker load`，可用下面命令确认镜像已在本地：
+
+```bash
+docker images
+```
+
+列表中应包含你在有网环境导出并拷贝过来的镜像（如 `harbor.tsingmao.com/xw-cli/...`）。未看到则需重新执行 `docker load -i <对应.tar>`。
+
+**3. 模型权重（可选）**
+
+若已按 2.2.2 拷贝模型，请核对「数据目录」下是否存在对应模型目录，且内含完整文件（如 `config.json`、词表、权重等）。例如用户安装、默认数据目录下 qwen2-7b：
+
+- 路径：`~/.xw/data/models/qwen2-7b/latest/`
+- 可执行：`ls ~/.xw/data/models/qwen2-7b/latest` 查看是否含 `config.json`、`.safetensors` 等。
+
+**4. 快速检查命令汇总**
+
+```bash
+xw version --client          # CLI 版本
+xw ls -a                     # 已注册模型（依赖配置与数据目录）
+docker images                # 已加载的运行时镜像（若使用 Docker）
+# 用户安装时
+ls ~/.xw/
+ls ~/.xw/data/models/
+# 系统安装时
+ls /etc/xw/
+systemctl status xw-server
+```
 
 ---
 
-## **三、小结**
+## 三、安装涉及的文件与目录汇总
 
-| **安装方式** | **实际执行的核心操作** |
+### 3.1 用户安装
+
+| 类型 | 路径 |
 | --- | --- |
-| **快速安装** | 下载 xw-${VERSION}-${arch}.tar.gz → 解压 → 执行 ./scripts/install.sh --user |
-| **离线安装** | 有网：下载安装包 + 从 devices.yaml 提取镜像并 docker pull、docker save；离线：解压包执行 install.sh + docker load 导入镜像；**可选**：将完整模型目录拷贝到 {数据目录}/models/{模型ID}/latest 以便离线运行模型 |
+| 二进制 | `~/.local/bin/xw` |
+| 配置 | `~/.xw/devices.yaml`，`~/.xw/models.yaml`，`~/.xw/runtime_params.yaml`（可选） |
+| 数据 | `~/.xw/data/`，`~/.xw/data/models/` |
+| 可能修改 | `~/.bashrc` 或 `~/.zshrc`（追加 PATH） |
 
-以上即为 xw 离线安装与部署的完整说明。
+### 3.2 系统安装
+
+| 类型 | 路径 |
+| --- | --- |
+| 二进制 | `/usr/local/bin/xw` |
+| 配置 | `/etc/xw/devices.yaml`，`/etc/xw/models.yaml`，`/etc/xw/runtime_params.yaml`（可选） |
+| 数据 | `/var/lib/xw/`，`/var/lib/xw/models/` |
+| 日志 | `/var/log/xw/` |
+| 服务 | `/etc/systemd/system/xw-server.service` |
+| 系统用户 | `xw`（–system –no-create-home –shell /bin/false） |
