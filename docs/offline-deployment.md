@@ -1,10 +1,5 @@
 # 离线安装部署文档
-
-# xw-cli 离线安装与部署
-
 本文档说明 xw-cli在离线或无外网环境下的安装与部署流程，便于复现与排查。
-
----
 
 ## 一、概述
 
@@ -44,7 +39,7 @@ xw 支持的架构与安装包对应关系：
 | --- | --- |
 | x86_64 / amd64 | amd64 包 |
 | aarch64 / arm64 | arm64 包 |
-1. **确认安装包版本号**（与官方 install.sh 一致）：
+2. **确认安装包版本号**（与官方 install.sh 一致）：
 
 ```bash
 curl -sL https://xw.tsingmao.com/install.sh | sed -n 's/^VERSION="\(.*\)"/\1/p'
@@ -52,7 +47,7 @@ curl -sL https://xw.tsingmao.com/install.sh | sed -n 's/^VERSION="\(.*\)"/\1/p'
 
 输出即为当前发布的版本号（如 `0.0.1`），记为 `VERSION`，用于下面下载与离线步骤中的 `xw-${VERSION}-${arch}.tar.gz`。
 
-1. **按架构选择并执行下载命令**（将上一步得到的版本号代入，二选一）：
+3. **按架构选择并执行下载命令**（将上一步得到的版本号代入，二选一）：
 
 ```bash
 # arm64 包
@@ -79,26 +74,6 @@ sudo bash scripts/install.sh
 # 或用户安装（无需 root）
 bash scripts/install.sh --user
 ```
-
-后续步骤与本文档「四、本地安装脚本（install.sh）」一致。
-
-**离线环境安装步骤**：
-
-1. 将 `xw-${VERSION}-${arch}.tar.gz` 拷贝到离线机器。
-2. 解压并进入目录，执行本地安装脚本（系统安装或用户安装二选一）：
-
-```bash
-tar -xzf xw-${VERSION}-${arch}.tar.gz
-cd xw-${VERSION}-${arch}
-
-# 系统安装（需 root）
-sudo bash scripts/install.sh
-
-# 或用户安装（无需 root）
-bash scripts/install.sh --user
-```
-
-后续步骤与本文档「四、本地安装脚本（install.sh）」一致。
 
 ### 2.2 离线下载运行时镜像与模型权重
 
@@ -128,7 +103,7 @@ docker save -o vllm-ascend-arm64.tar harbor.tsingmao.com/xw-cli/vllm-ascend:v0.1
 docker save -o mindie-arm64.tar harbor.tsingmao.com/xw-cli/mindie:2.2.RC1-800I-A2-py311-openeuler24.03-lts-arm64
 ```
 
-1. 将生成的 `.tar` 文件拷贝到离线机器。
+3. 将生成的 `.tar` 文件拷贝到离线机器。
 
 **步骤二：在离线环境导入镜像**
 
@@ -171,7 +146,7 @@ mkdir -p /home/离线机器username/.xw/data/models/qwen2-7b
 cp -r /mnt/qwen2-7b /home/离线机器username/.xw/data/models/qwen2-7b/latest
 ```
 
-1. 启动服务与运行模型（与数据目录一致）：
+3. 启动服务与运行模型（与数据目录一致）：
     - 默认数据目录：`xw serve`，另开终端执行 `xw run qwen2-7b`；
 
 **小结**：只要源目录是完整模型、且拷贝到上述 `{数据目录}/models/qwen2-7b/latest`，即可在离线环境用 xw 直接运行该模型，无需在线拉取。
