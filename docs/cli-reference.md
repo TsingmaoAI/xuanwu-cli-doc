@@ -304,15 +304,15 @@ xw serve --data ~/.xw
 ### 7.1 检查模型目录大小
 
 ```bash
-du -sh ~/.xw/models/qwen2-7b/latest
-du -sh ~/.xw/models/*/
+du -sh ~/.xw/data/models/qwen2-7b/latest
+du -sh ~/.xw/data/models/*/
 ```
 
 ### 7.2 查找 safetensors 权重文件
 
 ```bash
-find ~/.xw/models/qwen2-7b -name "*.safetensors" -exec ls -lh {} \;
-find -L ~/.xw/models/qwen2-7b -name "*.safetensors"
+find ~/.xw/data/models/qwen2-7b -name "*.safetensors" -exec ls -lh {} \;
+find -L ~/.xw/data/models/qwen2-7b -name "*.safetensors"
 ```
 
 ### 7.3 校验模型是否完整（必备文件）
@@ -320,7 +320,7 @@ find -L ~/.xw/models/qwen2-7b -name "*.safetensors"
 Qwen2 等模型通常需要：`config.json`、`tokenizer_config.json`、词表文件（如 `qwen2.tiktoken` 或 `tokenizer.json`）、`.safetensors` 权重。
 
 ```bash
-MODEL_DIR=~/.xw/models/qwen2-7b/latest
+MODEL_DIR=~/.xw/data/models/qwen2-7b/latest
 ls -la "$MODEL_DIR/config.json" "$MODEL_DIR/tokenizer_config.json"
 ls "$MODEL_DIR"/qwen2.tiktoken "$MODEL_DIR"/tokenizer.json 2>/dev/null
 ls "$MODEL_DIR"/*.safetensors 2>/dev/null
@@ -330,7 +330,7 @@ ls "$MODEL_DIR"/*.safetensors 2>/dev/null
 
 ```bash
 find /home -maxdepth 5 -type d -path "*/.xw/data/models/qwen2-7b" 2>/dev/null
-find /home -maxdepth 5 -type d -path "*/.xw/models/*qwen2*7b*" 2>/dev/null
+find /home -maxdepth 5 -type d -path "*/.xw/data/models/*qwen2*7b*" 2>/dev/null
 ```
 
 ### 7.5 重启服务并指定数据目录

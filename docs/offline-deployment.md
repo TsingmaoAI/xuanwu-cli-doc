@@ -117,7 +117,7 @@ docker load -i mindie-arm64.tar
 - 实际需下载的镜像列表以你当前使用的 `devices.yaml` 为准（不同芯片/引擎/架构组合不同）。
 - 若使用私有 Harbor（如 `harbor.tsingmao.com`），有网环境需先 `docker login` 再 `pull`；离线环境只需 `docker load`，无需登录镜像仓库。
 
-### 2.2.2 离线拷贝模型权重（可选）
+### 2.2.2 离线拷贝模型权重
 
 离线环境无法执行 `xw pull` 拉取模型时，可将**已准备好的完整模型目录**拷贝到 xw 的数据目录下，达到“本地已有模型、直接运行”的效果。
 
