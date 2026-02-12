@@ -792,6 +792,29 @@ onMounted(() => {
 <div class="model-card">
   <div class="model-header">
     <div>
+      <p class="model-name">GLM-5</p>
+      <p class="model-org">智谱 AI (ZhipuAI)</p>
+    </div>
+    <span class="model-badge badge-new">NEW</span>
+  </div>
+  <div class="model-meta">
+    <span><span class="meta-label">参数：</span>40B Dense</span>
+    <span><span class="meta-label">大小：</span>419.94GB</span>
+  </div>
+  <div class="model-tags">
+    <span class="tag tag-quant">BF16</span>
+    <span class="tag tag-quant">INT8</span>
+    <span class="tag tag-quant">W4A8</span>
+    <span class="tag tag-engine">MindIE</span>
+    <span class="tag tag-engine">MLGuider</span>
+    <span class="tag tag-default">VLLM</span>
+  </div>
+  <p class="model-desc">是智谱新一代的旗舰基座模型，面向 Agentic Engineering 打造，能够在复杂系统工程与长程 Agent 任务中提供可靠生产力。</p>
+</div>
+
+<div class="model-card">
+  <div class="model-header">
+    <div>
       <p class="model-name">GLM-4.5</p>
       <p class="model-org">智谱 AI (ZhipuAI)</p>
     </div>

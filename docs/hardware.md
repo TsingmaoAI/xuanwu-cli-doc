@@ -4,11 +4,11 @@
 
 ## 支持的平台
 
-| 硬件平台 | 支持型号| 支持操作系统 | 驱动要求 | 状态 |
-|----------|----------|-------|----------|------|
-| **华为昇腾 Ascend** | `910B` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | 支持 |
-| **华为昇腾 Ascend** | `310P` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | 支持 |
-| **沐曦 MetaX** | `C550` | `Ubuntu` | MACA >= 3.2.1.10 | 支持 |
+| 硬件平台 | 型号 | 支持操作系统 | 驱动要求 | 状态 |
+|:--------|:----:|:-------------|:---------|:----:|
+| **华为昇腾 Ascend** | `910B` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | ✅ |
+| **华为昇腾 Ascend** | `310P` | `OpenEuler`,`Ubuntu` | Ascend HDK >= 25.2.0 | ✅ |
+| **沐曦 MetaX** | `C550` | `Ubuntu`,`OpenCloudOS`,`TencentOS` | MACA >= 3.2.1.10 | ✅ |
 
 ## 驱动安装与验证
 
