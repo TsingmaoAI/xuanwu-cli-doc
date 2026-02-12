@@ -9,8 +9,9 @@ export default {
   setup() {
     onMounted(() => {
       fixCopyButtonIcons()
-      // 修复 logo 链接：将所有指向 / 的 logo 链接改为 /home
       fixLogoLinks()
+      // 分版本 Release Notes 是静态 HTML，点击时做整页跳转否则 SPA 会 404
+      fixReleaseNoteVersionLinks()
     })
   },
   // 导出路由工具函数，供文档页面使用
@@ -19,7 +20,7 @@ export default {
     app.component('ArchitectureDiagram', ArchitectureDiagram)
     // 路由工具已通过独立的 router.ts 文件导出
     // 文档页面可以通过 import { useRouter } from '../.vitepress/theme/router' 使用
-    
+
     // 注意：不再拦截 router 方法，让 VitePress 完全控制路由
     // 只在必要时（如点击 logo）才进行路由跳转
     if (router) {
@@ -85,6 +86,23 @@ function fixLogoLinks() {
       }
     }
   }, true) // 使用捕获阶段，确保优先处理
+}
+
+// 点击「分版本 Release Notes」链接时整页跳转，让服务器中间件返回静态 HTML，避免 SPA 路由 404
+function fixReleaseNoteVersionLinks() {
+  document.addEventListener('click', (e) => {
+    const target = (e.target as HTMLElement).closest('a')
+    if (!target || target.target === '_blank') return
+    const href = target.getAttribute('href')
+    if (!href || href.startsWith('http') || href.startsWith('#')) return
+    const path = href.replace(/\?.*$/, '')
+    // /release-notes/xxx 或 /release-notes/xxx/，且不是总览页
+    if (/^\/release-notes\/[^/]+\/?$/.test(path)) {
+      e.preventDefault()
+      window.location.href = href
+      return false
+    }
+  }, true)
 }
 
 // 注意：已完全移除 ensureCleanUrls 函数
