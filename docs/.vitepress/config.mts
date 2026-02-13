@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { readFileSync } from 'fs'
+import { readFileSync, existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -32,23 +32,43 @@ export default defineConfig({
     plugins: [
       {
         name: 'serve-public-index',
+        enforce: 'pre',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
-            // 如果是根路径请求，优先返回 public/index.html
+            // 如果是根路径请求，优先返回 public/index.html；不存在则重定向到 /home 避免空白
             if (req.url === '/' || req.url === '/index.html') {
               const indexPath = resolve(__dirname, '../public/index.html')
-              try {
-                const content = readFileSync(indexPath, 'utf-8')
-                res.setHeader('Content-Type', 'text/html')
-                res.end(content)
-                return
-              } catch (e) {
-                // 如果文件不存在，继续正常流程
-                next()
+              if (existsSync(indexPath)) {
+                try {
+                  const content = readFileSync(indexPath, 'utf-8')
+                  res.setHeader('Content-Type', 'text/html')
+                  res.end(content)
+                  return
+                } catch (_e) {
+                  // 读取失败则重定向
+                }
               }
-            } else {
-              next()
+              res.writeHead(302, { Location: '/home' })
+              res.end()
+              return
             }
+            // 分版本 Release Notes：/release-notes/<version>/ 或 /release-notes/<version> 提供 public/release-notes/<version>/index.html
+            const releaseNoteMatch = req.url && req.url.match(/^\/release-notes\/([^/]+)\/?(\?.*)?$/)
+            if (releaseNoteMatch) {
+              const version = releaseNoteMatch[1]
+              const htmlPath = resolve(__dirname, '../public/release-notes', version, 'index.html')
+              if (existsSync(htmlPath)) {
+                try {
+                  const content = readFileSync(htmlPath, 'utf-8')
+                  res.setHeader('Content-Type', 'text/html')
+                  res.end(content)
+                  return
+                } catch (_e) {
+                  // 读取失败继续往下
+                }
+            }
+            }
+            next()
           })
         }
       }
@@ -99,6 +119,7 @@ export default defineConfig({
       { text: '文档', link: '/doc' },
       { text: '模型库', link: '/models' },
       { text: 'API', link: '/api-guide' },
+      { text: '更新日志', link: '/release-notes/' },
       { text: 'GitHub', link: 'https://github.com/TsingmaoAI/xw-cli' }
     ],
 
@@ -138,6 +159,12 @@ export default defineConfig({
         text: '帮助',
         items: [
           { text: 'FAQ', link: '/faq' },
+        ]
+      },
+      {
+        text: '更新日志',
+        items: [
+          { text: '总览', link: '/release-notes/' },
         ]
       }
     ],
