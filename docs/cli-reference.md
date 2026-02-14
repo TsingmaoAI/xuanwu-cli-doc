@@ -6,7 +6,7 @@
 
 - **服务依赖**：除 `serve`、`version --client` 外，其余命令均需先启动 xw server（`xw serve`）
 - **全局参数**（适用于所有命令）：
-    - `--server <URL>`：指定 xw 服务地址（默认 http://localhost:11581，可通过环境变量 XW_SERVER 设置）
+    - `--server <URL>`：指定 xw 服务地址（默认 `http://localhost:11581`，可通过环境变量 XW_SERVER 设置）
     - `-v, --verbose`：详细输出
 
 ---
