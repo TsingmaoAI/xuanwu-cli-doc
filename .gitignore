@@ -13,3 +13,6 @@ index.html
 xw/
 
 dist/
+
+# 临时目录
+tmp/

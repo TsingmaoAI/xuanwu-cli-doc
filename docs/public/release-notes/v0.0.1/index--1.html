@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>xw-cli v0.0.1 Release Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --surface-2: #f0f1f4;
+    --border: #e2e5eb;
+    --text: #1e2028;
+    --text-muted: #6b7085;
+    --accent: #10b981;
+    --accent-dim: rgba(16,185,129,0.08);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.08);
+    --amber: #d97706;
+    --amber-dim: rgba(217,119,6,0.08);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.08);
+    --purple: #7c3aed;
+    --purple-dim: rgba(124,58,237,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeUp 0.6s ease-out;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(16,185,129,0.25);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #1e2028 30%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .header .subtitle span {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+    background: var(--surface-2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  .header .date {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Highlights */
+  .highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease-out 0.1s both;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .highlight-card:hover {
+    border-color: rgba(16,185,129,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .highlight-card .icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .highlight-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .highlight-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .highlight-card code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .model-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .model-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .model-tag.hot {
+    color: var(--red);
+    background: var(--red-dim);
+    border-color: rgba(239,68,68,0.2);
+  }
+
+  .model-tag.new {
+    color: var(--blue);
+    background: var(--blue-dim);
+    border-color: rgba(59,130,246,0.2);
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease-out 0.2s both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .tag-feature { color: var(--blue); background: var(--blue-dim); }
+  .tag-fix { color: var(--red); background: var(--red-dim); }
+  .tag-enhance { color: var(--purple); background: var(--purple-dim); }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .section li {
+    font-size: 14px;
+    color: var(--text);
+    padding: 10px 16px;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section li:hover {
+    border-color: var(--border);
+  }
+
+  .section li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .section.features li::before { background: var(--blue); }
+  .section.fixes li::before { background: var(--red); }
+  .section.enhancements li::before { background: var(--purple); }
+
+  .section li code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--amber);
+    background: var(--amber-dim);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* Contributors */
+  .contributors {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    animation: fadeUp 0.6s ease-out 0.25s both;
+  }
+
+  .contributors span {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .contributors a {
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .contributors a:hover {
+    color: var(--accent);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeUp 0.6s ease-out 0.3s both;
+  }
+
+  .footer a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .footer a:hover {
+    background: var(--accent-dim);
+    border-color: rgba(16,185,129,0.5);
+  }
+
+  .footer .copy {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 600px) {
+    .highlights { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">Release Notes</div>
+    <h1>xw-cli v0.0.1</h1>
+    <div class="subtitle">Build <span>main@ac418de</span></div>
+    <div class="date">2026-02-12</div>
+  </div>
+
+  <!-- Key Highlights -->
+  <div class="highlights">
+
+    <div class="highlight-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #ffffff 60%, rgba(16,185,129,0.08));">
+      <span class="icon">🧠</span>
+      <h3>新模型支持</h3>
+      <p>新增四款模型，覆盖通用对话、代码生成与 OCR 场景。</p>
+      <div class="model-tags">
+        <span class="model-tag hot">GLM-5</span>
+        <span class="model-tag hot">Minimax M2.5</span>
+        <span class="model-tag new">Qwen3-Next-Coder-80B</span>
+        <span class="model-tag new">GLM-OCR</span>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <span class="icon">🔌</span>
+      <h3>Omni-Infer 推理引擎</h3>
+      <p>新增 Omni-Infer 引擎，扩展推理后端选择。<code>xw show --engines</code> 查看可用引擎。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="icon">📦</span>
+      <h3>多版本配置管理</h3>
+      <p>版本化配置系统上线，支持服务器端下发、多版本并存与离线回退。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="icon">🔄</span>
+      <h3>热加载配置</h3>
+      <p>新增 <code>xw reload</code> 命令，无需重启即可应用配置变更。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="icon">🏗️</span>
+      <h3>配置驱动沙箱</h3>
+      <p>运行时迁移为配置驱动架构，支持自定义 Docker 镜像与芯片变体识别（沐曦等）。</p>
+    </div>
+  </div>
+
+  <!-- New Features -->
+  <div class="section features">
+    <div class="section-header">
+      <span class="section-tag tag-feature">Features</span>
+      <span class="section-title">新功能</span>
+    </div>
+    <ul>
+      <li>新增 GLM-5、Minimax M2.5、Qwen3-Next-Coder-80B、GLM-OCR 模型支持</li>
+      <li>支持在 <code>runtime_params.yaml</code> 中自定义 Docker 镜像</li>
+      <li><code>xw ps</code> 输出新增本地端口和容器 ID</li>
+      <li><code>xw show --engines</code> 展示模型支持的推理引擎</li>
+      <li><code>xw config info</code> 显示当前配置版本</li>
+      <li>注册表不可用时自动列出本地已安装版本</li>
+      <li>芯片变体支持（子系统设备识别，覆盖沐曦等国产芯片）</li>
+    </ul>
+  </div>
+
+  <!-- Bug Fixes -->
+  <div class="section fixes">
+    <div class="section-header">
+      <span class="section-tag tag-fix">Bug Fixes</span>
+      <span class="section-title">问题修复</span>
+    </div>
+    <ul>
+      <li>修复 RuntimeManager 未从 Config 读取 RuntimeParams</li>
+      <li>修复打包/安装时版本目录结构丢失</li>
+      <li>强制二进制包与配置包版本匹配</li>
+      <li>修复重新加载前未清除模型配置缓存</li>
+      <li><code>xw ls</code> 仅展示已完全下载的模型</li>
+      <li>修复 ExtSandbox 引擎感知的默认镜像选择</li>
+      <li>打包脚本错误信息正确输出到 stderr</li>
+      <li>改进 <code>quick-install.sh</code> 验证提示</li>
+    </ul>
+  </div>
+
+  <!-- Enhancements -->
+  <div class="section enhancements">
+    <div class="section-header">
+      <span class="section-tag tag-enhance">Enhancements</span>
+      <span class="section-title">优化改进</span>
+    </div>
+    <ul>
+      <li>Docker 标签实例发现，实现实时代理路由</li>
+      <li>统一 DockerRuntimeBase 中沙箱管理逻辑</li>
+      <li>集中配置加载，启动时加载 <code>runtime_params</code></li>
+      <li>统一版本格式（去除 <code>v</code> 前缀）</li>
+      <li>优化 <code>ext_sandboxes</code> 配置结构，减少冗余</li>
+      <li>改进 CLI 输出格式、移除冗余日志与歧义信号消息</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="https://github.com/TsingmaoAI/xw-cli">GitHub →</a>
+    <span class="copy">© 2026 TsingmaoAI · xw-cli</span>
+  </div>
+
+</div>
+
+</body>
+</html>
